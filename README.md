@@ -4,6 +4,5 @@ The game is played by 3 game types:
 1. Human vs Human.
 2. Human vs Computer.
 3. Human vs Human via online.
-And 2 ways are the online and offline.
 
-The tic-tac-toe game is written by C++.
+And 2 ways are the online and offline. The tic-tac-toe game is written by C++.
