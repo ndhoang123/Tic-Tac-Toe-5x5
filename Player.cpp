@@ -1,16 +1,21 @@
 #include "Player.h"
 
-
-HumanPlayer::HumanPlayer(int c_n, int c_d, char makerr) 
+HumanPlayer::HumanPlayer(char maker) 
 {
-	this->c_ng = c_n;
-	this->c_do = c_d;
-	this->maker = makerr;
+	c_ng = 0;
+	c_do = 0;
+	this->maker = maker;
 }
 
 
 HumanPlayer::~HumanPlayer()
 {
+}
+
+void HumanPlayer::setValue(int c_ng, int c_do)
+{
+	this->c_ng = c_ng;
+	this->c_do = c_do;
 }
 
 char HumanPlayer::getMaker() //This method is used to create to get maker from player
