@@ -18,10 +18,13 @@ private:
 	char maker;
 	int c_ng, c_do;
 public:
-	HumanPlayer(int, int, char);
+	HumanPlayer(char);
 	~HumanPlayer();
+	void setValue(int, int);
 	char getMaker();
 	tuple<int, int> getMove(); //using tuple for returning a couple of values
+	/*int getMove_ng();
+	int getMove_do();*/
 };
 //
 //class ComputerPlayer: public Player
