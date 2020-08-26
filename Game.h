@@ -1,23 +1,26 @@
 #pragma once
 #ifndef _GAME_H
 #define _GAME_H
-#include"Board.h"
+#include<iostream>
+class HumanPlayer;
+class ComputerPlayer;
+class Board;
 class Game
 {
 private:
-	Board bo;
 	bool change_status;
 	char key;
 	int i, j, a, quanX, quanO, set, size, b, sizea, sizeb;
 public:
 	Game();
 	~Game();
-	bool isDraw();
+	bool isDraw(Board&);
 	bool isWinner(char **);
-	void result(char **);
-	void updatingGame(HumanPlayer, HumanPlayer, char**, char **);
+	void result(Board&, char **);
+	void updatingHumanvsHumanMode(Board&, HumanPlayer&, HumanPlayer&, char**, char **);
+	void updatingHumanvsComputerMode(Board&, HumanPlayer&, ComputerPlayer&, char**, char**);
 	bool isGameover();
-	void showBoard(char **);
+	void showBoard(Board&, char **);
 };
 #endif
 

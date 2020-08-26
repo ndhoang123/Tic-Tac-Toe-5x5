@@ -35,6 +35,19 @@ void Board::getValue(HumanPlayer pl1, char **current_position)
 	current_position[rows][columns] = maker;
 }
 
+void Board::getValue(ComputerPlayer pl, char **current_position)
+{
+	tie(this->rows, this->columns) = pl.getMove();
+	this->maker = pl.getMaker();
+	current_position[rows][columns] = maker;
+}
+
+void Board::getValue(char **current_position, int x, int y, char maker)
+{
+	current_position[x][y] = maker;
+}
+
+
 void Board::assignValuetoSpace(char **current_position, char **position)
 {
 	position[rows][columns] = current_position[rows][columns];
@@ -77,4 +90,18 @@ void Board::showBoard(char **position)
 		cout << endl << "====================" << endl;
 	}
 }
+
+string Board::toString(char **position)
+{
+	string s = "";
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			s += position[i][j];
+		}
+	}
+	return s;
+}
+
 

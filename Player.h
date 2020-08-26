@@ -4,7 +4,12 @@
 #include<iostream>
 #include<string>
 #include<tuple>
+#include<vector>
+#include<unordered_map>
+#include"Game.h"
 using namespace std;
+class Board;
+
 class Player
 {
 public:
@@ -26,18 +31,27 @@ public:
 	/*int getMove_ng();
 	int getMove_do();*/
 };
-//
-//class ComputerPlayer: public Player
-//{
-//private:
-//	char maker;
-//	int random_ng, random_do;
-//public:
-//	ComputerPlayer();
-//	~ComputerPlayer();
-//	int selectRandomAvailableSpace();
-//	char maker(char);
-//	int getMove(int, int);
-//};
+
+class ComputerPlayer: public Player
+{
+private:
+	string s;
+	Game game;
+	char maker;
+	vector<int> v;
+	unordered_map<string, int> hashMap;
+public:
+	ComputerPlayer(char);
+	~ComputerPlayer();
+	vector<int> nextMoveAlphaBeta(Board, HumanPlayer, char**, char**);
+	int minimaxAlphaBeta(Board, HumanPlayer, char**, char**, int, bool, int, int, int, int);
+	int evaluation(bool, char**);
+	bool adjacentPlaced(int, int, char**);
+	bool checkVisitedBoard(Board, char**);
+	int getEvaluation(Board, char**);
+	void insertToHashMap(Board, int, char**);
+	tuple<int, int> getMove();
+	char getMaker();
+};
 
 #endif

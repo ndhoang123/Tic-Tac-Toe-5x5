@@ -1,5 +1,6 @@
 #include "Game.h"
-
+#include "Board.h"
+#include "Player.h"
 
 Game::Game(void)
 {
@@ -218,7 +219,7 @@ bool Game::isWinner(char **position)
 	return false;
 }
 
-void Game::updatingGame(HumanPlayer pl1, HumanPlayer pl2, char **current_position, char **position)
+void Game::updatingHumanvsHumanMode(Board &bo, HumanPlayer &pl1, HumanPlayer &pl2, char **current_position, char **position)
 {
 	if (change_status == false)
 	{
@@ -256,20 +257,61 @@ void Game::updatingGame(HumanPlayer pl1, HumanPlayer pl2, char **current_positio
 		}
 }
 
-bool Game::isDraw()
+void Game::updatingHumanvsComputerMode(Board &bo, HumanPlayer &pl1, ComputerPlayer &pl2, char **current_position, char **position)
+{
+	if (change_status == false)
+	{
+		cout << "Your last value is the same. Pls, re-insert your value again!" << endl;
+	}
+	
+	switch (set) //This case is indicated to "human vs human" case
+		{
+		case 1:
+			cout << "Player " << set << " turn: ";
+			cin >> bo.columns >> bo.rows;
+			pl1.setValue(bo.columns, bo.rows); // First, the player sets column, row 
+			bo.getValue(pl1, current_position); // Second, get the player's last value
+			if(bo.isOnBoard(current_position, position) == false) 
+			{
+				bo.assignValuetoSpace(current_position, position); // Third, assign the value
+				set = 2; // Check condition, if the value is on the board, the player has to re-insert the value again!. 
+												//	Otherwise, change the status
+				bo.decreaseCount();
+				change_status = true;
+			}
+			else change_status = false;
+			break;
+		case 2:
+			cout << "Player " << set << " turn" << endl;
+			pl2.nextMoveAlphaBeta(bo, pl1, current_position, position);
+			bo.getValue(pl2, current_position);
+			if(bo.isOnBoard(current_position, position) == false)
+			{
+				bo.assignValuetoSpace(current_position, position);
+				set = 1;
+				bo.decreaseCount();
+				change_status = true;
+			}
+			else change_status = false;
+			break;
+		}
+}
+
+
+bool Game::isDraw(Board &bo)
 {
 	if(bo.theBoardIsOver() == true) return true;
 	else return false;
 }
 
-void Game::result(char **position)
+void Game::result(Board &bo, char **position)
 {
-	if(isDraw() == true) cout << "Unfortunely, the game is draw!" << endl;
+	if(isDraw(bo) == true) cout << "Unfortunely, the game is draw!" << endl;
 	else if(isWinner(position) == true) cout << "Player " << key << " is winner in this game" << endl;
 	else cout << "Have some problems from the program. Pls, feedback to the developer!" << endl;
 }
 
-void Game::showBoard(char **position)
+void Game::showBoard(Board &bo, char **position)
 {
 	if(bo.counts == 100) 
 	{
